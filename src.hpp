@@ -24,6 +24,28 @@ struct Permutation { // 置换
         }
     }
 
+    // Copy constructor
+    Permutation(const Permutation& other) {
+        this->size = other.size;
+        this->mapping = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            this->mapping[i] = other.mapping[i];
+        }
+    }
+
+    // Assignment operator
+    Permutation& operator=(const Permutation& other) {
+        if (this != &other) {
+            delete[] mapping;
+            this->size = other.size;
+            this->mapping = new int[size];
+            for (size_t i = 0; i < size; i++) {
+                this->mapping[i] = other.mapping[i];
+            }
+        }
+        return *this;
+    }
+
     ~Permutation() {
         // TODO: 析构函数，合理管理你的内存😈
         delete[] mapping;
@@ -129,6 +151,28 @@ struct Cycle { // 轮换
         for (size_t i = 0; i < size; i++) {
             this->elements[i] = elements[i];
         }
+    }
+
+    // Copy constructor
+    Cycle(const Cycle& other) {
+        this->size = other.size;
+        this->elements = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            this->elements[i] = other.elements[i];
+        }
+    }
+
+    // Assignment operator
+    Cycle& operator=(const Cycle& other) {
+        if (this != &other) {
+            delete[] elements;
+            this->size = other.size;
+            this->elements = new int[size];
+            for (size_t i = 0; i < size; i++) {
+                this->elements[i] = other.elements[i];
+            }
+        }
+        return *this;
     }
 
     ~Cycle() {
