@@ -184,11 +184,26 @@ struct Cycle { // 轮换
         // TODO: 将轮换应用大小为size的permutation上，直接修改permutation指向的数组。保证size>=elements[i]。
         if (this->size == 0) return;
 
-        int temp = permutation[elements[this->size - 1]];
-        for (int i = this->size - 1; i > 0; i--) {
-            permutation[elements[i]] = permutation[elements[i - 1]];
+        // Build permutation from cycle
+        int* perm = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            perm[i] = i; // identity
         }
-        permutation[elements[0]] = temp;
+        for (size_t i = 0; i < this->size; i++) {
+            perm[elements[i]] = elements[(i + 1) % this->size];
+        }
+
+        // Apply permutation
+        int* temp = new int[size];
+        for (size_t i = 0; i < size; i++) {
+            temp[i] = permutation[perm[i]];
+        }
+        for (size_t i = 0; i < size; i++) {
+            permutation[i] = temp[i];
+        }
+
+        delete[] perm;
+        delete[] temp;
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Cycle& c) {
